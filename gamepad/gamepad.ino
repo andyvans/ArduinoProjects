@@ -52,9 +52,9 @@ void loop() {
   if(ry > 127) ry = 127;
   ly = ly * -1;
   gp.setLeftXaxis(lx);
-  gp.setRightXaxis(rx);
   gp.setLeftYaxis(ly);
-  gp.setRightYaxis(ry);
+  gp.setRightXaxis(rx);  
+  gp.setRightYaxis(ry);  
   
   Serial.print("Left X: ");
   Serial.println(lx);
@@ -63,8 +63,8 @@ void loop() {
   Serial.print("Right X: ");
   Serial.println(rx);
   Serial.print("Right Y: ");
-  Serial.println(ry);
-   
+  Serial.println(ry+7);
+  
   
   int UPLEFT, UPRIGHT, UP, DOWN, LEFT, RIGHT, RIGHTBUTTON, LEFTBUTTON, X, Y, A, B;
   UPLEFT = digitalRead(8);

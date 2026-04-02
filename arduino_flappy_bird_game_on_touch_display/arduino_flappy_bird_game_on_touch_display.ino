@@ -21,7 +21,7 @@
 Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
 #define SENSIBILITY 300
-#define MINPRESSURE 10
+#define MINPRESSURE 700
 #define MAXPRESSURE 1000
 
 #define YP A1 
@@ -46,10 +46,6 @@ bool scrPress = false;
 long nextDrawLoopRunTime;
 void setup() {
   
-  Serial.begin(9600);
-
-  Serial.println("starting");
-
   tft.reset();
   tft.begin(0x9341); 
 
@@ -72,7 +68,6 @@ void setup() {
   tft.fillScreen(BLUE);
   startGame();
 
-  
 }
 
 void loop(void) {
@@ -85,8 +80,6 @@ void loop(void) {
   TSPoint p = ts.getPoint();
   pinMode(XM, OUTPUT);
   pinMode(YP, OUTPUT);
-
-  Serial.println(p.z);
 
   if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {
     if (!running) {
@@ -148,52 +141,52 @@ void drawBorder () {
 
 void drawFlappy(int x, int y) {
   // Upper & lower body
-  tft.fillRect(x+2, y+8, 2, 10, BLACK);
-  tft.fillRect(x+4, y+6, 2, 2, BLACK);
-  tft.fillRect(x+6, y+4, 2, 2, BLACK);
-  tft.fillRect(x+8, y+2, 4, 2, BLACK);
+  tft.fillRect(x+2, y+3, 2, 10, BLACK);
+  tft.fillRect(x+4, y+1, 2, 2, BLACK);
+  tft.fillRect(x+6, y-1, 2, 2, BLACK);
+  tft.fillRect(x+8, y-3, 4, 2, BLACK);
   tft.fillRect(x+12, y, 12, 2, BLACK);
-  tft.fillRect(x+24, y+2, 2, 2, BLACK);
-  tft.fillRect(x+26, y+4, 2, 2, BLACK);
-  tft.fillRect(x+28, y+6, 2, 6, BLACK);
-  tft.fillRect(x+10, y+22, 10, 2, BLACK);
-  tft.fillRect(x+4, y+18, 2, 2, BLACK);
-  tft.fillRect(x+6, y+20, 4, 2, BLACK);
+  tft.fillRect(x+24, y-3, 2, 2, BLACK);
+  tft.fillRect(x+26, y-1, 2, 2, BLACK);
+  tft.fillRect(x+28, y+5, 2, 6, BLACK);
+  tft.fillRect(x+10, y+17, 10, 2, BLACK);
+  tft.fillRect(x+4, y+13, 2, 2, BLACK);
+  tft.fillRect(x+6, y+15, 4, 2, BLACK);
   
   // Body fill
-  tft.fillRect(x+12, y+2, 6, 2, YELLOW);
-  tft.fillRect(x+8, y+4, 8, 2, YELLOW);
-  tft.fillRect(x+6, y+6, 10, 2, YELLOW);
-  tft.fillRect(x+4, y+8, 12, 2, YELLOW);
-  tft.fillRect(x+4, y+10, 14, 2, YELLOW);
-  tft.fillRect(x+4, y+12, 16, 2, YELLOW);
-  tft.fillRect(x+4, y+14, 14, 2, YELLOW);
-  tft.fillRect(x+4, y+16, 12, 2, YELLOW);
-  tft.fillRect(x+6, y+18, 12, 2, YELLOW);
-  tft.fillRect(x+10, y+20, 10, 2, YELLOW);
+  tft.fillRect(x+12, y-3, 6, 2, YELLOW);
+  tft.fillRect(x+8, y-1, 8, 2, YELLOW);
+  tft.fillRect(x+6, y+1, 10, 2, YELLOW);
+  tft.fillRect(x+4, y+3, 12, 2, YELLOW);
+  tft.fillRect(x+4, y+5, 14, 2, YELLOW);
+  tft.fillRect(x+4, y+7, 16, 2, YELLOW);
+  tft.fillRect(x+4, y+9, 14, 2, YELLOW);
+  tft.fillRect(x+4, y+11, 12, 2, YELLOW);
+  tft.fillRect(x+6, y+13, 12, 2, YELLOW);
+  tft.fillRect(x+10, y+15, 10, 2, YELLOW);
   
   // Eye
-  tft.fillRect(x+18, y+2, 2, 2, BLACK);
-  tft.fillRect(x+16, y+4, 2, 6, BLACK);
-  tft.fillRect(x+18, y+10, 2, 2, BLACK);
-  tft.fillRect(x+18, y+4, 2, 6, WHITE);
-  tft.fillRect(x+20, y+2, 4, 10, WHITE);
-  tft.fillRect(x+24, y+4, 2, 8, WHITE);
-  tft.fillRect(x+26, y+6, 2, 6, WHITE);
-  tft.fillRect(x+24, y+6, 2, 4, BLACK);
+  tft.fillRect(x+18, y-3, 2, 2, BLACK);
+  tft.fillRect(x+16, y-1, 2, 6, BLACK);
+  tft.fillRect(x+18, y+5, 2, 2, BLACK);
+  tft.fillRect(x+18, y-1, 2, 6, WHITE);
+  tft.fillRect(x+20, y-3, 4, 10, WHITE);
+  tft.fillRect(x+24, y-1, 2, 8, WHITE);
+  tft.fillRect(x+26, y+1, 2, 6, WHITE);
+  tft.fillRect(x+24, y+1, 2, 4, BLACK);
   
   // Beak
-  tft.fillRect(x+20, y+12, 12, 2, BLACK);
-  tft.fillRect(x+18, y+14, 2, 2, BLACK);
-  tft.fillRect(x+20, y+14, 12, 2, RED);
-  tft.fillRect(x+32, y+14, 2, 2, BLACK);
-  tft.fillRect(x+16, y+16, 2, 2, BLACK);
-  tft.fillRect(x+18, y+16, 2, 2, RED);
-  tft.fillRect(x+20, y+16, 12, 2, BLACK);
-  tft.fillRect(x+18, y+18, 2, 2, BLACK);
-  tft.fillRect(x+20, y+18, 10, 2, RED);
-  tft.fillRect(x+30, y+18, 2, 2, BLACK);
-  tft.fillRect(x+20, y+20, 10, 2, BLACK);
+  tft.fillRect(x+20, y+7, 12, 2, BLACK);
+  tft.fillRect(x+18, y+9, 2, 2, BLACK);
+  tft.fillRect(x+20, y+9, 12, 2, RED);
+  tft.fillRect(x+32, y+9, 2, 2, BLACK);
+  tft.fillRect(x+16, y+11, 2, 2, BLACK);
+  tft.fillRect(x+18, y+11, 2, 2, RED);
+  tft.fillRect(x+20, y+11, 12, 2, BLACK);
+  tft.fillRect(x+18, y+13, 2, 2, BLACK);
+  tft.fillRect(x+20, y+13, 10, 2, RED);
+  tft.fillRect(x+30, y+13, 2, 2, BLACK);
+  tft.fillRect(x+20, y+15, 10, 2, BLACK);
 }
 void startGame() {
   int fx=50;
